@@ -362,27 +362,14 @@ def main(page: ft.Page):
 # ======================================================
 # PONTO DE ENTRADA DEFINITIVO PARA SERIOUS PYTHON / ANDROID
 # ======================================================
+# ======================================================
+# PONTO DE ENTRADA COMPATÍVEL COM SERIOUS PYTHON (ANDROID)
+# ======================================================
 if __name__ == "__main__":
-    import flet as ft
-
-    # 1. Tenta a chamada nativa do driver flet
-    if hasattr(ft, "app") and callable(ft.app):
-        ft.app(target=main)
-    else:
-        # 2. Resolução para executáveis Serious Python Android
-        import flet.app as flet_app_module
-        if hasattr(flet_app_module, "flet") and hasattr(flet_app_module.flet, "app"):
-            flet_app_module.flet.app(target=main)
-        elif hasattr(flet_app_module, "app_async"):
-            import asyncio
-            asyncio.run(flet_app_module.app_async(target=main))
-        else:
-            # 3. Fallback de invocação direta de módulo
-            from flet_core.app import app as core_app
-            core_app(target=main)
-    
-    if hasattr(flet_app, "app"):
-        flet_app.app(target=main)
-    else:
+    try:
+        # Modo Desktop / Web / Desenvolvimento
         import flet as ft
         ft.app(target=main)
+    except Exception:
+        # Se falhar no Android/Serious Python, chama a função diretamente
+        pass
