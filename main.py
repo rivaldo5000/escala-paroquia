@@ -363,13 +363,10 @@ def main(page: ft.Page):
 # PONTO DE ENTRADA COMPATÍVEL COM SERIOUS PYTHON / ANDROID
 # ======================================================
 if __name__ == "__main__":
-    try:
-        from flet.app import app as flet_app
-        flet_app(target=main)
-    except ImportError:
-        try:
-            import flet_runtime as ft_run
-            ft_run.app(target=main)
-        except Exception:
-            import flet as ft
-            ft.app(target=main)
+    import flet.app as flet_app
+    
+    if hasattr(flet_app, "app"):
+        flet_app.app(target=main)
+    else:
+        import flet as ft
+        ft.app(target=main)
