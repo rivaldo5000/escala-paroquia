@@ -360,7 +360,16 @@ def main(page: ft.Page):
     carregar_dropdowns()
 
 # ======================================================
-# PONTO DE ENTRADA DO APLICATIVO
+# PONTO DE ENTRADA COMPATÍVEL COM SERIOUS PYTHON / ANDROID
 # ======================================================
 if __name__ == "__main__":
-    ft.app(target=main)
+    try:
+        from flet.app import app as flet_app
+        flet_app(target=main)
+    except ImportError:
+        try:
+            import flet_runtime as ft_run
+            ft_run.app(target=main)
+        except Exception:
+            import flet as ft
+            ft.app(target=main)
