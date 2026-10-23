@@ -7,6 +7,7 @@ name = "escala_paroquia"
 version = "1.0.0"
 dependencies = [
     "flet",
+    "flet-runtime",
     "fpdf2",
     "certifi",
     "urllib3"
